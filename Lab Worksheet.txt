@@ -1,0 +1,209 @@
+Name = Akul Agarwal
+Roll no = 2601010023
+Campus = Rishihood University Sonipat)
+Machine = MacBook Air (13.6)
+
+# STEP 1
+
+Q1> Think about it in stages. Finding it?
+Answer>
+1. I would first check the system settings and look for any relevant privacy, login-item, or security information.
+2. I would use the macOS `log show` command to inspect system logs around the time I suspect something happened.
+3. I would check Activity Monitor for unfamiliar processes and investigate their names before assuming they are malicious.
+4. I would review Login Items and extensions for anything I do not recognize.
+5. I would compare suspicious activity with reliable documentation and avoid concluding that a process is spyware based on its name alone.
+
+Q2> Which of mine did you not have?
+Answer> [Enter the item/number that applies to your own investigation.]
+
+Q3> Find where the logs are?
+Answer> `log show` is the command I can use to query macOS unified logs. I can also inspect available log files under locations such as `/var/log`.
+
+Q4> One file you found, and what it seems to be for?
+Answer> I inspected `[enter the log file you actually checked]`. From the entries I saw, it appears to contain messages about system or application activity. The exact contents depend on the log file and the time period inspected.
+
+Q5> One of these is a command that queries a system. The other is a folder of plain text files. Why does that difference matter?
+Answer> `/var/log` is a directory that can contain log files, while `log show` is a command that queries macOS's unified logging system. The command lets me filter entries by time and other conditions instead of manually opening and searching through files. The two sources may contain different kinds of records, so I should use the one that fits the task.
+
+# STEP 2
+
+Q1> The flag you want limits how far back it looks. It takes a value like 1h or 10m.
+Answer> `log show --last 10m`
+
+Q2> Find out how big that file is.
+Answer> [Enter the size shown for the file on your Mac.]
+
+Q3> Recommended file size they told is 5MB.
+Answer> I saved the extracted log output as `[your log filename, e.g. mylogs.txt]`. Its size was [enter actual size]. I would adjust the time window or filtering if it is larger than the recommended 5 MB.
+
+Q4> Attempts
+Answer> [Record your actual attempts, including the time window, resulting file size, and how long each attempt took.]
+
+Q5> Number of lines and command for it?
+Answer> Command: `wc -l [your-log-filename]`  
+Lines: [enter the number printed by your command]
+
+# STEP 3
+
+Q1> What command can help you see just the first few lines of your file?
+Answer> `head`
+
+Q2> Copy one line out of your file below. Not the header. Pick a real line and write it exactly as it appears.
+Answer> [Paste one real log entry from your own output here, exactly as printed. Do not reuse another student's log line.]
+
+Field breakdown (based on the format of the line you copied):
+- The first field is normally the timestamp, showing when the event was recorded.
+- Other fields can include thread/activity identifiers and the log level.
+- The process and subsystem information can help identify which component produced the message. The exact field positions can vary with the log format.
+
+Q3> Which field answers "what time did this happen"?
+Answer> The timestamp field indicates when the event was recorded.
+
+Q4> Which field answers "which program did this"?
+Answer> The process name in the log entry usually identifies the program or process that emitted the message. I would identify its position from the actual line I copied, because log formats can differ.
+
+# STEP 4
+
+Q1> What command counts the matching lines instead of printing all of them?
+Answer> `grep -c "pattern" [your-log-filename]` counts lines matching the chosen pattern. I need to replace `pattern` with the text I want to search for.
+
+Q2> The single most surprising thing your machine was doing:
+Answer> [Describe one genuine pattern you noticed in your own logs. Mention the process or activity and why it stood out; do not use another student's observation unless your logs show the same thing.]
+
+# STEP 5
+
+Q> Go back through it and find two things in there that identify you or your machine:
+Answer>
+1. [Enter a real detail found in your logs, such as a process or device-specific setting, without sharing unnecessary private information.]
+2. [Enter a second real detail from your logs, such as a network interface or service activity. Avoid posting passwords, public IPs, serial numbers, or other sensitive identifiers.]
+
+# STEP 6: Count it with code
+
+Q1> Code Blank 1: `print("Total lines:", ------------------)`
+Answer> `len(lines)`
+
+Q2> Code Blanks 2, 3, 4:
+Answer> [Fill these in from the worksheet's provided Python code and your own run. The exact values depend on the code and log format.]
+
+Q3> Before you fill in a single blank, tell me: which field position are you counting, and why that one and not another?
+Answer> I would count the field that contains the process name, because that lets the script group entries by the program that produced them. I would confirm the correct index by splitting a real log line and checking its fields; the index depends on the format used by my log output.
+
+Q4> Run it - Your command:
+Answer> `python3 summary.py [your-log-filename]`
+
+Q5> First three lines of output, exactly as they came out:
+Answer>
+[Paste the first three lines from your actual program output here.]
+
+Q6> Does your total line count match what you wrote down in Step 2? (Yes / No)
+Answer> [Yes/No, based on comparing your actual results.]
+
+Q7> Why would a Python program and a shell command disagree about how many lines are in the same file?
+Answer> `wc -l` counts newline characters, so a final line without a newline may not be included. Python's line-reading methods can count that final unterminated line as well. The methods used and the exact file contents can therefore cause a small difference.
+
+Q8> You just typed `python3`. Where does that program actually live? Guess first:
+Answer> My guess is `[enter your guess]`.
+
+Q9> Now find out. What command tells you?
+Answer> `which`
+
+Q10> Actual answer:
+Answer> [Paste the output of `which python3` on your Mac.]
+
+Q11> What command shows every directory your shell searches through when you type a program name?
+Answer> `echo $PATH`
+
+Q12> Were you right? If not, what do you understand now that you didn't ten seconds ago?
+Answer> I learned that the shell searches the directories listed in the `PATH` environment variable to find a command. The exact location of Python can differ depending on how it was installed and which shell environment I use.
+
+# STEP 7: Break it
+
+Break 1: a file that isn't there
+
+Q1> Run your script with a filename that doesn't exist (e.g., `python3 summary.py nosuchfile.txt`). First line of the error:
+Answer> [Paste the first line of the error from your own run.]
+
+Q2> What it's telling you:
+Answer> Python could not find the named file at the path it tried to open. This can happen if the file does not exist in the current directory or if the path is incorrect.
+
+Break 2: a file you're not allowed to read
+
+Q3> The command is [ _ _ _ _ _ ] and it takes a three-digit number:
+Answer> `chmod`
+
+Q4> Command that removed the permissions:
+Answer> `chmod 000 [your-log-filename]`
+
+Q5> First line of the error:
+Answer> [Paste the first line from your own run. If the command still succeeds, check whether you are running as an account that can bypass the permissions and ask your instructor how they expect this test to be performed.]
+
+Q6> What it's telling you:
+Answer> The file's permission settings may prevent the current user from reading it. The exact result can depend on ownership, permissions, and whether the process has elevated privileges.
+
+Q7> Command that put them back:
+Answer> `chmod 644 [your-log-filename]`
+
+Break 3: your own typo
+
+Q8> What you changed:
+Answer> I removed the colon (`:`) from the end of a `for` statement in `summary.py` to introduce a syntax error.
+
+Q9> First line of the error:
+Answer> [Paste the first line of the SyntaxError from your own run.]
+
+Q10> What it's telling you:
+Answer> Python found invalid syntax while parsing the script, before it could run the affected code. In this test, the missing colon is the cause.
+
+Q11> Which of the three was most useful to you, and why?
+Answer> The syntax-error test was useful because it showed me that a small typing mistake can stop a program before it starts. Reading the error message helped me locate and fix the problem.
+
+# STEP 8: Store it
+
+Table: Turn this directory into a repository
+
+What you're doing | Command you used
+--- | ---
+Make it a repository | `git init`
+See what's untracked | `git status`
+Stage your files | `git add summary.py .gitignore`
+Commit | `git commit -m "Analyze system logs with Python"`
+Look at the history | `git log --oneline`
+
+Q1> Your commit message:
+Answer> `Analyze system logs with Python`
+
+Q2> Short hash:
+Answer> [Copy the short hash shown by `git log --oneline` after your commit.]
+
+Now the decision
+
+Q3> Are you committing the log file itself, or only the script?
+Answer> [Select the option that matches what you actually staged and committed. Recommended: script only.]
+
+Q4> Why:
+Answer> Log output can contain details about processes, device activity, and network services. Keeping raw logs out of a repository reduces the risk of exposing private information, especially if the repository is public.
+
+Q5> Is your GitHub repository public or private?
+Answer> [Select Public or Private based on your actual repository settings.]
+
+Q6> Why:
+Answer> [Explain your actual choice. A private repository limits who can view the code; a public repository makes it visible to everyone. In either case, I should not upload private logs or sensitive machine details.]
+
+Push it
+
+Q7> Repository URL:
+Answer> [Paste your own GitHub repository URL after creating it and pushing your commit.]
+
+Q8> Open it in a browser. Can you see your file contents on the page? (Yes / No)
+Answer> [Yes/No, based on checking your repository in a browser while signed in if necessary.]
+
+Before you go
+
+Q9> In one sentence, what does your program do? You may not use the word "file".
+Answer> It reads system log entries, counts how often each process appears, and reports the most frequent processes.
+
+Q10> Now go back to the very first page and read the steps you wrote before you knew anything. What would you add?
+Answer> I would add a time-limited log query, filter the output for relevant events, and use a short Python script to summarize repeated process names instead of relying only on manual inspection.
+
+Q11> What would you throw out?
+Answer> I would avoid relying only on manually browsing settings or scrolling through Activity Monitor, because those approaches can make it difficult to investigate a specific time period. I would use them as supporting checks rather than my main method.
